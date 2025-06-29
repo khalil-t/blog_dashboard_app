@@ -6,7 +6,7 @@ export interface BlogPost {
   content: string;
   status: 'draft' | 'published';
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date;
 }
 
 export interface PostFormData {

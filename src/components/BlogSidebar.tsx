@@ -2,6 +2,9 @@ import { FileText, PlusCircle, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
+
+
+
 export function BlogSidebar() {
   return (
     <div className="bg-white border-r border-gray-200 transition-all duration-300 ease-in-out w-80 flex flex-col h-full">

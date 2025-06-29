@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { BlogSidebar } from '@/components/BlogSidebar';
-import { PostEditor } from '@/components/PostEditor';
+import PostEditor from "@/components/PostEditor"
 import { BlogPost, PostFormData } from '@/types/blog';
-import Head from "next/head";
 
 const Index = () => {
-  const [posts, setPosts] = useState<BlogPost[]>([
+  const [publishedPosts, setPublishedPosts] = useState<BlogPost[]>([
     {
       id: '1',
       title: 'Welcome to Your Blog Dashboard',
@@ -16,6 +15,8 @@ const Index = () => {
       updatedAt: new Date(),
     },
   ]);
+
+
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
@@ -29,14 +30,18 @@ const Index = () => {
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-    setPosts(prev => [newPost, ...prev]);
+    setPublishedPosts(prev => [newPost, ...prev]);
     setSelectedPost(newPost);
   };
 
+
+
   const handleSavePost = (data: PostFormData, status: 'draft' | 'published') => {
+    
+    console.log(publishedPosts)
     if (selectedPost) {
       // Update existing post
-      setPosts(prev => prev.map(post => 
+      setPublishedPosts(prev => prev.map(post => 
         post.id === selectedPost.id 
           ? { ...post, ...data, status, updatedAt: new Date() }
           : post
@@ -51,26 +56,26 @@ const Index = () => {
         createdAt: new Date(),
         updatedAt: new Date(),
       };
-      setPosts(prev => [newPost, ...prev]);
+      setPublishedPosts(prev => [newPost, ...prev]);
       setSelectedPost(newPost);
     }
 
  
   };
 
+
+
+
+
   return (
     <div className="min-h-screen bg-gray-50 flex">
       <BlogSidebar
-        posts={posts}
-        selectedPost={selectedPost}
-        onSelectPost={setSelectedPost}
-        onNewPost={handleNewPost}
-        isCollapsed={sidebarCollapsed}
-        onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
       />
       <PostEditor
-        post={selectedPost}
+        publishedPosts={publishedPosts}
         onSave={handleSavePost}
+          selectedPost={selectedPost}
+
       />
     </div>
   );
